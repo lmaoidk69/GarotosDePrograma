@@ -17,6 +17,9 @@ def fazer_cadastro():
 
     CPass = ctk.CTkEntry(cadastro, placeholder_text="Password", show="*")
     CPass.pack(pady=10)
+
+    CStatus = ctk.CTkLabel(cadastro, text="")
+    CStatus.pack(pady=10)
     #Funções:
     
     def salvar_cadastro():
@@ -26,14 +29,13 @@ def fazer_cadastro():
         if usernameCad and passwordCad:
             dados.DicLog[usernameCad] = passwordCad
             print("Cadastro realizado com sucesso!")
-            t.sleep(2)
+            CStatus.configure(text="Cadastro realizado com sucesso!", text_color="green")
             cadastro.destroy()
         else:
             print("Username e Password não podem ser vazios.")
-    
+            CStatus.configure(text="Username e Password não podem ser vazios.", text_color="red")
+
     CBotao = ctk.CTkButton(cadastro, text="Salvar", command=salvar_cadastro, width=100, height=40, corner_radius=10)
     CBotao.pack(pady=10)
 
-
-    
     cadastro.mainloop()

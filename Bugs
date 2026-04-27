@@ -1,1 +1,2 @@
-1. App_Login, nao está alterando o texto em caso de login bem sucedido
+1. App_Login, nao está alterando o texto em caso de login bem sucedido(decidi destroy e ignorar isso)
+2. Terminar datas e get date no NViagem

@@ -1,0 +1,73 @@
+import customtkinter as ctk
+import time as t
+import App_Cadastro as cadastro
+import Dados_Login as dados
+import ctkdateentry as ctkde
+import datetime as dt
+ctk.deactivate_automatic_dpi_awareness()
+
+
+#Tive que trazer cidades p ca, pois parece que para um dropdown menu, os valores tem que ser definidos no mesmo arquivo, ou seja, não podem ser importados de outro arquivo. Se alguém souber como contornar isso, me avise.
+
+Cidades = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Salvador", "Brasília", "Curitiba", "Fortaleza", "Manaus", "Recife", "Porto Alegre"]
+
+
+ctk.set_appearance_mode("dark")
+NViagem = ctk.CTk()
+NViagem.geometry("1280x720")
+NViagem.title("Nova Viagem")
+
+#Conteúdo NViagem
+NviagemFrameT = ctk.CTkFrame(NViagem, height=150, width=400, fg_color="#FF5733", corner_radius=0)
+NviagemFrameUI = ctk.CTkFrame(NViagem, height=70, width=700, fg_color="#2D2C2C", corner_radius=10, border_width=50, border_color="#2d2c2c")
+NViagemTitle = ctk.CTkLabel(master=NviagemFrameT, text="Criar Nova Viagem", font=ctk.CTkFont(size=50, weight="bold"), text_color="white")
+NViagemLabel1 = ctk.CTkLabel(master=NviagemFrameUI, text="Quantas pessoas vão na viagem?", font=ctk.CTkFont(size=25, weight="bold"))
+NViagemEntry1 = ctk.CTkEntry(master=NviagemFrameUI, placeholder_text="Número de pessoas", width=200, height=40, corner_radius=10)
+NViagemLabel2 = ctk.CTkLabel(master=NviagemFrameUI, text="Qual o destino da viagem?", font=ctk.CTkFont(size=25, weight="bold"))
+NViagemOptionMenu2 = ctk.CTkOptionMenu(master=NviagemFrameUI, values=Cidades, width=200, height=40, corner_radius=10)
+NViagemDate1Label = ctk.CTkLabel(master=NviagemFrameUI, text="Qual a data inicial da viagem?", font=ctk.CTkFont(size=25, weight="bold"))
+NViagemDate1Entry = ctkde.CTkDateEntry(master=NviagemFrameUI, width=200, height=40, corner_radius=10,)
+NViagemDate2Label = ctk.CTkLabel(master=NviagemFrameUI, text="Qual a data final da viagem?", font=ctk.CTkFont(size=25, weight="bold"))
+NViagemDate2Entry = ctkde.CTkDateEntry(master=NviagemFrameUI, width=200, height=40, corner_radius=10,)
+NViagemButton = ctk.CTkButton(master=NviagemFrameUI, text="Criar Viagem", width=200, height=40, corner_radius=10, font=ctk.CTkFont(size=20, weight="bold"), fg_color="#B84025", hover_color="#FE6543", text_color="white", command=lambda: criar_viagem())
+
+
+NviagemFrameT.pack(fill="x", pady=(0, 0))
+NviagemFrameUI.pack( pady=(50, 0))
+NViagemTitle.pack(pady=(0,0))
+NViagemLabel1.pack(pady=20)
+NViagemEntry1.pack(pady=10)
+NViagemLabel2.pack(pady=20)
+NViagemOptionMenu2.pack(pady=10)
+NViagemDate1Label.pack(pady=20)
+NViagemDate1Entry.pack(pady=10)
+NViagemDate2Label.pack(pady=20)
+NViagemDate2Entry.pack(pady=10)
+NViagemButton.pack(pady=20)
+
+def criar_viagem():
+    num_pessoas = NViagemEntry1.get()
+    destino = NViagemOptionMenu2.get()
+    data_inicial = NViagemDate1Entry.get_date()
+    data_final = NViagemDate2Entry.get_date()
+
+    if not num_pessoas.isdigit():
+        print("Por favor, insira um número válido de pessoas.")
+        return
+
+    num_pessoas = int(num_pessoas)
+
+    if data_inicial >= data_final:
+        print("A data inicial deve ser anterior à data final.")
+        return
+
+    print(f"Viagem criada com sucesso!\nNúmero de pessoas: {num_pessoas}\nDestino: {destino}\nData Inicial: {data_inicial}\nData Final: {data_final}")
+    if data_inicial < dt.date.today() or data_final < dt.date.today():
+        print("A data inicial da viagem não pode ser no passado.")
+        return
+    if data_inicial > data_final:
+        print("A data inicial da viagem deve ser anterior à data final.")
+        return
+
+
+NViagem.mainloop()
