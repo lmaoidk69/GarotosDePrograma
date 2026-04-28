@@ -2,6 +2,8 @@ import customtkinter as ctk
 from PIL import Image, ImageDraw
 import App_Cadastro as cadastro
 import Dados_Login as dados
+import App_TelaP as App_TelaP
+import App_NViagem as App_NViagem
 
 ctk.deactivate_automatic_dpi_awareness()
 ctk.set_appearance_mode("dark")
@@ -128,7 +130,7 @@ def validar_login():
     passwordLog = TPass.get()
     if usernameLog in dados.DicLog and dados.DicLog[usernameLog] == passwordLog:
         Tlogin_status.configure(text=f"Bem-vindo, {usernameLog}!", text_color="#30D158")
-        incial.after(800, incial.destroy)
+        incial.after(800, lambda: [incial.destroy(), App_TelaP.abrir_telaP()])
     else:
         Tlogin_status.configure(text="Credenciais inválidas. Tente novamente.", text_color="#FF453A")
 
